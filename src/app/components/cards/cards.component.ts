@@ -19,6 +19,10 @@ export class CardsComponent {
 
   data: any[] = [];
   card: any;
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalItems: number = 0;
+  totalPages: number = 0;
 
   constructor(
     private apiGitService: ApiGitService,
@@ -30,13 +34,28 @@ export class CardsComponent {
       this.search(query);
     });
   }
+    search(query: string) {
+      this.currentPage = 1; // Reinicia a página ao realizar uma nova pesquisa
+      this.loadData(query);
+    }
 
-  search(query: string) {
-    this.apiGitService.getRepos(query).subscribe((data: any) => {
-      this.data = data.items;
-    });
+    loadData(query: string) {
+      this.apiGitService.getRepos(query, this.currentPage, this.itemsPerPage)
+        .subscribe((data: any) => {
+          this.data = data.items;
+          this.totalItems = data.total_count;
+          this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+        });
+    }
+
+    onPageChange(newPage: number) {
+      if (newPage < 1 || newPage > this.totalPages) {
+        return;
+      }
+      this.currentPage = newPage;
+      this.searchService.currentSearchQuery.subscribe((query: string) => {
+        this.loadData(query);
+      });
+    }
   }
 
-
-  
-}

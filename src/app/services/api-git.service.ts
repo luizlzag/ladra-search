@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiGitService {
 
-  API_URL = 'https://api.github.com';
+  private baseUrl = 'https://api.github.com/search/repositories';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  public getRepos(query: string) {
-    return this.http.get(`${this.API_URL}/search/repositories?q=${query}`);
+  getRepos(query: string, page: number, perPage: number): Observable<any> {
+    const url = `${this.baseUrl}?q=${query}&page=${page}&per_page=${perPage}`;
+    return this.http.get(url);
   }
 }
