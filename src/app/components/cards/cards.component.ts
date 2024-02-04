@@ -7,15 +7,23 @@ import { SearchService } from '../../services/search.service';
 import { PaginationComponent } from "../pagination/pagination.component";
 
 
-
 @Component({
     selector: 'app-cards',
     standalone: true,
     templateUrl: './cards.component.html',
     styleUrl: './cards.component.css',
-    imports: [HttpClientModule, CommonModule, MatIconModule, PaginationComponent]
+    imports: [HttpClientModule, CommonModule, MatIconModule, PaginationComponent],
+    
 })
 export class CardsComponent {
+  animationState = 'initial';
+  FilterCategory!: string;
+
+  toggleHoverAnimation() {
+    this.animationState = (this.animationState === 'initial' ? 'hovered' : 'initial');
+  }
+
+
   @Input() repositories: any[] = [];
 
   data: any[] = [];
@@ -34,6 +42,9 @@ export class CardsComponent {
     this.searchService.currentSearchQuery.subscribe((query: string) => {
       this.search(query);
     });
+    this.searchService.currentFilterCategory.subscribe((category: string) => {
+      this.FilterCategory = category;
+    });
   }
     search(query: string) {
       this.currentPage = 1; // Reinicia a página ao realizar uma nova pesquisa
@@ -41,7 +52,7 @@ export class CardsComponent {
     }
 
     loadData(query: string) {
-      this.apiGitService.getRepos(query, this.currentPage, this.itemsPerPage)
+      this.apiGitService.getRepos(query, this.FilterCategory, this.currentPage, this.itemsPerPage)
         .subscribe((data: any) => {
           this.data = data.items;
           this.totalItems = data.total_count;
