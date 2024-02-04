@@ -6,7 +6,7 @@ import { Observable, catchError, of } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiGitService {
-  private baseUrl = 'https://api.github.com/search/';
+  private baseUrl = 'https://api.github.com/search/repositories';
 
   constructor(private http: HttpClient) {}
 
@@ -15,7 +15,7 @@ export class ApiGitService {
       return of([]);
     }
 
-    const url = `${this.baseUrl}${category}?q=${query}&page=${page}&per_page=${perPage}`;
+    const url = `${this.baseUrl}?q=${query}&page=${page}&per_page=${perPage}`;
     return this.http.get(url).pipe(
       catchError(() => of([]))
     );
