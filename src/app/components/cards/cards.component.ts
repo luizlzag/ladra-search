@@ -4,15 +4,16 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 import { SearchService } from '../../services/search.service';
+import { PaginationComponent } from "../pagination/pagination.component";
 
 
 
 @Component({
-  selector: 'app-cards',
-  standalone: true,
-  imports: [HttpClientModule,CommonModule,MatIconModule],
-  templateUrl: './cards.component.html',
-  styleUrl: './cards.component.css'
+    selector: 'app-cards',
+    standalone: true,
+    templateUrl: './cards.component.html',
+    styleUrl: './cards.component.css',
+    imports: [HttpClientModule, CommonModule, MatIconModule, PaginationComponent]
 })
 export class CardsComponent {
   @Input() repositories: any[] = [];
@@ -49,13 +50,12 @@ export class CardsComponent {
     }
 
     onPageChange(newPage: number) {
-      if (newPage < 1 || newPage > this.totalPages) {
-        return;
+      if (newPage >= 1 && newPage <= this.totalPages) {
+        this.currentPage = newPage;
+        this.searchService.currentSearchQuery.subscribe((query: string) => {
+          this.loadData(query);
+        });
       }
-      this.currentPage = newPage;
-      this.searchService.currentSearchQuery.subscribe((query: string) => {
-        this.loadData(query);
-      });
     }
   }
 

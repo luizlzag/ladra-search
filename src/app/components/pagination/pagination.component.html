@@ -1,0 +1,7 @@
+
+<div class="flex items-center justify-center text-sm text-white gap-5 mb-5">
+    <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+    <span>Página {{ currentPage }} de {{ totalPages }}</span>
+    <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">Próxima</button>
+  </div>
+  
