@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 import { SearchService } from '../../services/search.service';
 import { PaginationComponent } from "../pagination/pagination.component";
+import { ThemeService } from '../../services/theme.service';
 
 
 @Component({
@@ -18,7 +19,8 @@ import { PaginationComponent } from "../pagination/pagination.component";
 export class CardsComponent {
   animationState = 'initial';
   FilterCategory!: string;
-
+  isDarkTheme = false;
+  
   toggleHoverAnimation() {
     this.animationState = (this.animationState === 'initial' ? 'hovered' : 'initial');
   }
@@ -35,7 +37,8 @@ export class CardsComponent {
 
   constructor(
     private apiGitService: ApiGitService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private themeService: ThemeService
     ) { }
 
   ngOnInit() {
@@ -45,6 +48,10 @@ export class CardsComponent {
     this.searchService.currentFilterCategory.subscribe((category: string) => {
       this.FilterCategory = category;
     });
+    this.themeService.isDarkTheme.subscribe((isDark: any) => {
+      this.isDarkTheme = isDark;
+    });
+
   }
     search(query: string) {
       this.currentPage = 1; // Reinicia a página ao realizar uma nova pesquisa

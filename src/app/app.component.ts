@@ -6,14 +6,16 @@ import { CardsComponent } from "./components/cards/cards.component";
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { ApiGitService } from './services/api-git.service';
+import { ThemeToggleComponent } from "./components/theme-toggle/theme-toggle.component";
+
 
 @Component({
     selector: 'app-root',
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [RouterOutlet, SideNavBarComponent, SearchBarComponent, CardsComponent,HttpClientModule],
     providers: [ApiGitService],
+    imports: [RouterOutlet, SideNavBarComponent, SearchBarComponent, CardsComponent, HttpClientModule, ThemeToggleComponent]
 })
 export class AppComponent {
   title = 'ladra-search';

@@ -1,0 +1,13 @@
+<div class="flex justify-end pt-5">
+    <button 
+    class="w-20 h-5 rounded-full bg-white flex items-center transition duration-300 focus:outline-none shadow"
+    (click)="toggleTheme()">
+        <div 
+        [class]="isDarkTheme ? 'bg-slate-900 w-8 h-8 rounded-full flex items-center justify-center transform translate-x-10 transition duration-300' : 'bg-white w-8 h-8 rounded-full flex items-center justify-center transform translate-x-0 transition duration-300'">
+            <span 
+            [class]="isDarkTheme ? 'text-white' : 'text-slate-900'">
+            {{ isDarkTheme ? '🌙' : '☀️' }}
+            </span>
+        </div>
+    </button>
+</div>

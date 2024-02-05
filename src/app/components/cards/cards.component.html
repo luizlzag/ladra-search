@@ -6,14 +6,14 @@
   (pageChange)="onPageChange($event)"
   ></app-pagination>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-3"  >
-        <div class="outline outline-slate-300 outline-1 rounded-md py-2 px-2" *ngFor="let items of data">
+        <div [class]="isDarkTheme ? 'outline outline-slate-300 outline-1 rounded-md py-2 px-2':'rounded-md outline outline-2 outline-[#4c1d95] py-2 px-2'" *ngFor="let items of data">
             <div class="flex items-center gap-2">
                 <img [src]="items.owner.avatar_url" alt="" class="rounded-full w-5"> 
                 <a [href]="items.url" target="_blank" class="text-xl text-[#c2410c]" >{{ items.name }}</a>
             </div>
             <div class="grid">
-                <span class="text-white text-base">{{items.description}}</span>
-                <span class="text-gray-300 text-sm">{{items.language}}</span>
+                <span [class]="isDarkTheme? 'text-white text-base': 'text-slate-900'">{{items.description}}</span>
+                <span [class]="isDarkTheme?  'text-gray-300 text-sm':'text-slate-900'">{{items.language}}</span>
             </div>  
             <div>
                 <div class="flex gap-2 flex-wrap pt-2">
@@ -28,9 +28,9 @@
                   </div>
             </div>
             <div class="flex items-center gap-5">
-                <span class="text-gray-300 text-sm flex items-center gap-2">{{items.stargazers_count}} Stars </span>
-                <span class="text-gray-300 text-sm">{{items.forks_count}} Forks</span>
-                <span class="text-gray-300 text-sm">{{items.watchers_count}} Watchers</span>
+                <span class="text-orange-500 text-sm flex items-center gap-2">{{items.stargazers_count}} Stars </span>
+                <span [class]="isDarkTheme ? 'text-white text-sm' : 'text-slate-950'">{{items.forks_count}} Forks</span>
+                <span [class]="isDarkTheme ? 'text-white text-sm' : 'text-slate-950'">{{items.watchers_count}} Watchers</span>
             </div>
         </div>
 
